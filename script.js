@@ -97,4 +97,51 @@ document.addEventListener('DOMContentLoaded', () => {
 
         lastScrollY = currentScrollY;
     });
+
+    // Hero Text Animation
+    const heroTitle = document.querySelector('.hero-content h1');
+    if (heroTitle) {
+        const textNodes = Array.from(heroTitle.childNodes);
+        heroTitle.innerHTML = ''; // Clear existing content
+
+        let globalDelay = 0;
+        const delayIncrement = 0.05; // Delay between characters in seconds
+
+        textNodes.forEach(node => {
+            if (node.nodeType === 3) { // Text node
+                const text = node.textContent;
+                for (let char of text) {
+                    const span = document.createElement('span');
+                    span.textContent = char;
+                    span.className = 'char-animate';
+                    span.style.animationDelay = `${globalDelay}s`;
+                    heroTitle.appendChild(span);
+                    globalDelay += delayIncrement;
+                }
+            } else if (node.nodeType === 1) { // Element node (e.g., BR or SPAN)
+                if (node.tagName === 'BR') {
+                    heroTitle.appendChild(node.cloneNode(true));
+                    // No delay increment for breaks, or maybe a small pause?
+                } else {
+                    // For nested spans (like the red text), we need to split their content too
+                    const innerSpan = document.createElement('span');
+                    // Copy attributes (class, style, etc.)
+                   Array.from(node.attributes).forEach(attr => {
+                        innerSpan.setAttribute(attr.name, attr.value);
+                   });
+                   
+                   const innerText = node.textContent;
+                   for (let char of innerText) {
+                       const charSpan = document.createElement('span');
+                       charSpan.textContent = char;
+                       charSpan.className = 'char-animate';
+                       charSpan.style.animationDelay = `${globalDelay}s`;
+                       innerSpan.appendChild(charSpan);
+                       globalDelay += delayIncrement;
+                   }
+                   heroTitle.appendChild(innerSpan);
+                }
+            }
+        });
+    }
 });

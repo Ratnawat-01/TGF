@@ -273,7 +273,7 @@ header {
     overflow: hidden;
     border-radius: 8px;
     position: relative;
-    group: hover;
+    /* group: hover; removed invalid property */
 }
 
 .service-img {
@@ -744,6 +744,28 @@ footer {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@keyframes blurFadeIn {
+    0% {
+        opacity: 0;
+        filter: blur(10px);
+        transform: scale(1.1);
+    }
+
+    100% {
+        opacity: 1;
+        filter: blur(0);
+        transform: scale(1);
+    }
+}
+
+.char-animate {
+    display: inline-block;
+    opacity: 0;
+    animation: blurFadeIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    white-space: pre;
+    /* Preserve spaces */
 }
 
 /* Responsive */
