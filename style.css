@@ -830,6 +830,11 @@ footer {
         /* Better fit for mobile */
     }
 
+    .hero-content p {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
     .section-header h2 {
         font-size: 2rem;
     }
